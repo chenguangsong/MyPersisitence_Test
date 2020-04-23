@@ -3,7 +3,7 @@
 
     <!--定义数据源信息-->
     <datasource>
-        <property name="jdbcDriver" value=""></property>
+        <property name="driverClass" value=""></property>
         <property name="jdbcUrl" value="jdbc:mysql:///lagou"></property>
         <property name="username" value="root"></property>
         <property name="password" value="root@123"></property>

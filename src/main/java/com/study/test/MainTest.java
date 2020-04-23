@@ -1,6 +1,9 @@
 package com.study.test;
 
+import com.study.io.Resource;
 import org.junit.Test;
+
+import java.io.InputStream;
 
 /**
  * @ClassName MainTest
@@ -13,6 +16,6 @@ public class MainTest {
 
     @Test
     public void Test(){
-
+        InputStream inputStream = Resource.getResourceAsInputStream("SqlMapperConfig.xml");
     }
 }
