@@ -3,7 +3,7 @@ package com.study.pojo;
 /**
  * @ClassName SqlStatement
  * @Description sql映射类
- * @Author songchenguang
+ * @Author chenguang
  * @Date 2020-04-23 23:09
  * @Version 1.0
  **/

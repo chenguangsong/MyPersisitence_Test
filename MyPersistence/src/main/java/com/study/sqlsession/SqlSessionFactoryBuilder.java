@@ -10,7 +10,7 @@ import java.io.InputStream;
 /**
  * @ClassName SqlSessionFactoryBuilder
  * @Description 创建SqlsessionFactory对象
- * @Author songchenguang
+ * @Author chenguang
  * @Date 2020-04-23 22:58
  * @Version 1.0
  **/
