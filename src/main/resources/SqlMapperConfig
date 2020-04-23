@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!--定义数据源信息-->
+    <datasource>
+        <property name="jdbcDriver" value=""></property>
+        <property name="jdbcUrl" value="jdbc:mysql:///lagou"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root@123"></property>
+    </datasource>
+
+    <!--引入Mapper配置文件 方便自定义框架解析时一次性加载-->
+    <mapper source="UserMapper.xml"></mapper>
+</configuration>
