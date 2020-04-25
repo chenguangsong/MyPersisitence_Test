@@ -1,5 +1,8 @@
 package com.study.sqlsession;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface SqlSession {
@@ -11,7 +14,7 @@ public interface SqlSession {
     * @Param [statementId, param]
     * @return java.util.List<E>
     **/
-    <E> List<E> selectList (String statementId, Object... param);
+    <E> List<E> selectList (String statementId, Object... param) throws IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException;
 
     /**
     * @author chenguang
@@ -20,5 +23,5 @@ public interface SqlSession {
     * @Param [statementId, param]
     * @return T
     **/
-    <T> T selectOne (String statementId, Object... param);
+    <T> T selectOne (String statementId, Object... param) throws IllegalAccessException, ClassNotFoundException, IntrospectionException, InstantiationException, SQLException, InvocationTargetException, NoSuchFieldException;
 }

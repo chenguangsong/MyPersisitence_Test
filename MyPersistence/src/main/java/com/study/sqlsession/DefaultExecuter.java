@@ -72,8 +72,9 @@ public class DefaultExecuter implements Executer {
                 PropertyDescriptor propertyDescriptor = new PropertyDescriptor(columnName, resultclassType);
                 Method writeMethod = propertyDescriptor.getWriteMethod();
                 writeMethod.invoke(o,value);
-                objects.add(o);
+
             }
+            objects.add(o);
         }
         return (List<E>) objects;
     }

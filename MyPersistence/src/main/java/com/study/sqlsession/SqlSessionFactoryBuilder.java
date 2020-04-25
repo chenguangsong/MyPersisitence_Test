@@ -5,6 +5,7 @@ import com.study.pojo.Configuration;
 import org.dom4j.DocumentException;
 
 import java.beans.PropertyVetoException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
@@ -16,7 +17,7 @@ import java.io.InputStream;
  **/
 public class SqlSessionFactoryBuilder {
 
-    public SqlsessionFactory build(InputStream in) throws PropertyVetoException, DocumentException {
+    public SqlsessionFactory build(InputStream in) throws PropertyVetoException, DocumentException, FileNotFoundException {
         //解析配置文件 封装为Configuration对象
        Configuration configuration = new XMLConfigBuilder().pathConfig(in);
         //创建SqlsessionFactory对象

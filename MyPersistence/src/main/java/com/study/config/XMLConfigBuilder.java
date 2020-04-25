@@ -1,7 +1,6 @@
 package com.study.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.study.io.Resource;
 import com.study.pojo.Configuration;
 import com.study.pojo.SqlStatement;
 import org.dom4j.Document;
@@ -10,6 +9,9 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
@@ -36,7 +38,7 @@ public class XMLConfigBuilder {
     * @Param [in]
     * @return com.study.pojo.Configuration
     **/
-    public Configuration pathConfig(InputStream in) throws DocumentException, PropertyVetoException {
+    public Configuration pathConfig(InputStream in) throws DocumentException, PropertyVetoException, FileNotFoundException {
         Document document = new SAXReader().read(in);
         //获取根结点
         Element rootElement = document.getRootElement();
@@ -54,7 +56,7 @@ public class XMLConfigBuilder {
         dataSource.setJdbcUrl(properties.getProperty("jdbcUrl"));
         dataSource.setUser(properties.getProperty("username"));
         dataSource.setPassword(properties.getProperty("password"));
-
+        configuration.setDataSource(dataSource);
         //获取mapper
         List<Element> mappers = document.selectNodes("//mapper");
         for (Element mapper : mappers) {
@@ -71,15 +73,16 @@ public class XMLConfigBuilder {
     * @Param [element]
     * @return void
     **/
-    public void parseSqlStatement(Element element) throws DocumentException {
+    public void parseSqlStatement(Element element) throws DocumentException, FileNotFoundException {
         String source = element.attributeValue("source");
-        InputStream inputStream = Resource.getResourceAsInputStream(source);
+//        InputStream inputStream = Resource.getResourceAsInputStream(source);
+        InputStream inputStream = new FileInputStream(new File("/Users/songchenguang/IdeaProjects/MyPersisitence_Test/src/main/resources/"+"UserMapper"));
         Document document = new SAXReader().read(inputStream);
         Element rootElement = document.getRootElement();
 
         String namespace = rootElement.attributeValue("namespace");
 
-        List<Element> mappers = rootElement.selectNodes("//mapper");
+        List<Element> mappers = rootElement.selectNodes("//select");
         for (Element mapper : mappers) {
             SqlStatement sqlStatement = new SqlStatement();
             String id = mapper.attributeValue("id");
