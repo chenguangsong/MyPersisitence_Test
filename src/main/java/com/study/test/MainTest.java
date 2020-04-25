@@ -1,5 +1,6 @@
 package com.study.test;
 
+import com.study.dao.IUserInfoDao;
 import com.study.pojo.UserInfo;
 import com.study.sqlsession.SqlSession;
 import com.study.sqlsession.SqlSessionFactoryBuilder;
@@ -29,24 +30,42 @@ public class MainTest {
 
     @Test
     public void Test() throws PropertyVetoException, DocumentException, IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException, FileNotFoundException {
-//        InputStream resourceAsSteam = Resource.getResourceAsInputStream("SqlMapperConfig.xml");
+////        InputStream resourceAsSteam = Resource.getResourceAsInputStream("SqlMapperConfig.xml");
         InputStream inputStream = new FileInputStream(new File("/Users/songchenguang/IdeaProjects/MyPersisitence_Test/src/main/resources/SqlMapperConfig"));
         SqlsessionFactory sqlsessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
-        SqlSession sqlSession = sqlsessionFactory.openSession();
+        SqlSession sqlSessionsion = sqlsessionFactory.openSession();
+//
+//        UserInfo user = new UserInfo();
+//        user.setUserId(1);
+//        user.setUserName("李四");
+//
+//        Object o = sqlSession.selectOne("com.study.pojo.UserInfo.selectOne", user);
+//
+//        System.out.println(o.toString());
+//
+//        System.out.println("==================");
+//        List<Object> objects = sqlSession.selectList("com.study.pojo.UserInfo.selectList", user);
+//        for (Object object : objects) {
+//            System.out.println(object.toString());
+//        }
 
-        UserInfo user = new UserInfo();
-        user.setUserId(1);
-        user.setUserName("李四");
+//        IUserInfoDao dao = new UserInfoDao();
+//        dao.findAll();
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setUserName("李四");
+//        dao.findByCondition(userInfo);
 
-        Object o = sqlSession.selectOne("com.study.pojo.UserInfo.selectOne", user);
-
-        System.out.println(o.toString());
-
-        System.out.println("==================");
-        List<Object> objects = sqlSession.selectList("com.study.pojo.UserInfo.selectList", user);
-        for (Object object : objects) {
-            System.out.println(object.toString());
+        IUserInfoDao userInfoDao = sqlSessionsion.getMapper(IUserInfoDao.class);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName("李四");
+        UserInfo userInfo1 = userInfoDao.findByCondition(userInfo);
+        System.out.println(userInfo1.toString());
+        System.out.println("======================");
+        List<UserInfo> all = userInfoDao.findAll();
+        for (UserInfo info : all) {
+            System.out.println(info.toString());
         }
+
     }
 }
