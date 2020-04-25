@@ -1,8 +1,14 @@
 package com.study.test;
 
 import com.study.io.Resource;
+import com.study.pojo.User;
+import com.study.sqlsession.SqlSession;
+import com.study.sqlsession.SqlSessionFactoryBuilder;
+import com.study.sqlsession.SqlsessionFactory;
+import org.dom4j.DocumentException;
 import org.junit.Test;
 
+import java.beans.PropertyVetoException;
 import java.io.InputStream;
 
 /**
@@ -15,7 +21,15 @@ import java.io.InputStream;
 public class MainTest {
 
     @Test
-    public void Test(){
+    public void Test() throws PropertyVetoException, DocumentException {
         InputStream inputStream = Resource.getResourceAsInputStream("SqlMapperConfig.xml");
+
+        SqlsessionFactory sqlsessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlsessionFactory.openSession();
+        User user = new User();
+        user.setId("1");
+        user.setName("zs");
+        Object o = sqlSession.selectOne("com.study.User.selectOne", user);
+        System.out.println(o.toString());
     }
 }

@@ -1,4 +1,4 @@
-package com.study.com.study.config;
+package com.study.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.study.io.Resource;

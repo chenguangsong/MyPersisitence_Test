@@ -1,6 +1,6 @@
 package com.study.sqlsession;
 
-import com.study.com.study.config.XMLConfigBuilder;
+import com.study.config.XMLConfigBuilder;
 import com.study.pojo.Configuration;
 import org.dom4j.DocumentException;
 
@@ -19,9 +19,8 @@ public class SqlSessionFactoryBuilder {
     public SqlsessionFactory build(InputStream in) throws PropertyVetoException, DocumentException {
         //解析配置文件 封装为Configuration对象
        Configuration configuration = new XMLConfigBuilder().pathConfig(in);
-
-
         //创建SqlsessionFactory对象
-        return null;
+        SqlsessionFactory defaultSqlSessionFactory = new DefaultSqlSessionFactory(configuration);
+        return defaultSqlSessionFactory;
     }
 }
