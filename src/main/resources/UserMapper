@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<mapper namespace="com.study.pojo.User">
+<mapper namespace="com.study.pojo.UserInfo">
 
     <!--配置sql信息-->
 
-    <select id="selectList" resultType="com.study.pojo.User">
+    <select id="selectList" resultType="com.study.pojo.UserInfo">
         select * from user
     </select>
 
-    <select id="selectOne" resultType="com.study.pojo.User" paramType="com.study.pojo.User">
-        select * from user where name = #{name}
+    <select id="selectOne" resultType="com.study.pojo.UserInfo" paramType="com.study.pojo.UserInfo">
+        select * from user where name = #{userName}
     </select>
 
 </mapper>
