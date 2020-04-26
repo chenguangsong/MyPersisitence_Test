@@ -1,6 +1,7 @@
 package com.study.test;
 
 import com.study.dao.IUserInfoDao;
+import com.study.io.Resource;
 import com.study.pojo.UserInfo;
 import com.study.sqlsession.SqlSession;
 import com.study.sqlsession.SqlSessionFactoryBuilder;
@@ -10,8 +11,6 @@ import org.junit.Test;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyVetoException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -30,8 +29,7 @@ public class MainTest {
 
     @Test
     public void Test() throws PropertyVetoException, DocumentException, IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException, FileNotFoundException {
-////        InputStream resourceAsSteam = Resource.getResourceAsInputStream("SqlMapperConfig.xml");
-        InputStream inputStream = new FileInputStream(new File("/Users/songchenguang/IdeaProjects/MyPersisitence_Test/src/main/resources/SqlMapperConfig"));
+        InputStream inputStream = Resource.getResourceAsInputStream("SqlMapperConfig");
         SqlsessionFactory sqlsessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
         SqlSession sqlSessionsion = sqlsessionFactory.openSession();

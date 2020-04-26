@@ -10,5 +10,5 @@
     </datasource>
 
     <!--引入Mapper配置文件 方便自定义框架解析时一次性加载-->
-    <mapper source="UserMapper.xml"></mapper>
+    <mapper source="UserMapper"></mapper>
 </configuration>
