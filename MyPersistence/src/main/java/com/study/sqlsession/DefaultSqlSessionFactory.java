@@ -5,7 +5,7 @@ import com.study.pojo.Configuration;
 /**
  * @ClassName DefaultSqlSessionFactory
  * @Description TODO
- * @Author songchenguang
+ * @Author chenguang
  * @Date 2020-04-25 13:43
  * @Version 1.0
  **/

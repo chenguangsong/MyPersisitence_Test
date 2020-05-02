@@ -27,6 +27,14 @@ public interface SqlSession {
 
     /**
     * @author chenguang
+    * @Description //修改操作
+    * @CreateDate 2020-05-02 19:12
+    * @Param [statementId, param]
+    * @return boolean
+    **/
+    boolean execute(String statementId, Object... param) throws ClassNotFoundException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException;
+    /**
+    * @author chenguang
     * @Description //使用JDK动态代理生成dao接口实现类
     * @CreateDate 2020-04-25 17:53
     * @Param [mapperClass]

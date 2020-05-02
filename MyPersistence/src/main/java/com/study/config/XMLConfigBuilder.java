@@ -59,7 +59,14 @@ public class XMLConfigBuilder {
         //获取mapper
         List<Element> mappers = document.selectNodes("//mapper");
         for (Element mapper : mappers) {
-            parseSqlStatement(mapper);
+            String source = mapper.attributeValue("source");
+            InputStream inputStream = Resource.getResourceAsInputStream(source);
+            Document mapperDocument = new SAXReader().read(inputStream);
+            Element mapperRootElement = mapperDocument.getRootElement();
+            List<Element> elements = mapperRootElement.elements();
+            for (Element element : elements) {
+                parseSqlStatement(element);
+            }
         }
         return configuration;
     }
@@ -73,29 +80,21 @@ public class XMLConfigBuilder {
     * @return void
     **/
     public void parseSqlStatement(Element element) throws DocumentException {
-        String source = element.attributeValue("source");
-        InputStream inputStream = Resource.getResourceAsInputStream(source);
-        Document document = new SAXReader().read(inputStream);
-        Element rootElement = document.getRootElement();
+        SqlStatement sqlStatement = new SqlStatement();
+        String id = element.attributeValue("id");
+        String paramType = element.attributeValue("paramType");
+        String resultType = element.attributeValue("resultType");
+        String sql = element.getTextTrim();
 
-        String namespace = rootElement.attributeValue("namespace");
+        sqlStatement.setId(id);
+        sqlStatement.setParamType(paramType);
+        sqlStatement.setResultType(resultType);
+        sqlStatement.setSql(sql);
 
-        List<Element> mappers = rootElement.selectNodes("//select");
-        for (Element mapper : mappers) {
-            SqlStatement sqlStatement = new SqlStatement();
-            String id = mapper.attributeValue("id");
-            String paramType = mapper.attributeValue("paramType");
-            String resultType = mapper.attributeValue("resultType");
-            String sql = mapper.getTextTrim();
+        String namespace = element.getParent().attributeValue("namespace");
 
-            sqlStatement.setId(id);
-            sqlStatement.setParamType(paramType);
-            sqlStatement.setResultType(resultType);
-            sqlStatement.setSql(sql);
-
-            String key = namespace + "." + id;
-            configuration.getMap().put(key,sqlStatement);
-        }
+        String key = namespace + "." + id;
+        configuration.getMap().put(key,sqlStatement);
     }
 
 }

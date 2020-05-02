@@ -7,7 +7,18 @@
     </select>
 
     <select id="findByCondition" resultType="com.study.pojo.UserInfo" paramType="com.study.pojo.UserInfo">
-        select * from userinfo where userName = #{userName}
+        select * from userinfo where userId = #{userId}
     </select>
 
+    <insert id="saveUserInfo" paramType="com.study.pojo.UserInfo">
+        insert into userinfo values( #{userId} , #{userName} )
+    </insert>
+
+    <update id="updateUserInfoById" paramType="com.study.pojo.UserInfo">
+        update userinfo set username = #{userName} where userId = #{userId}
+    </update>
+
+    <delete id="deleteUserInfoById" paramType="com.study.pojo.UserInfo">
+        delete from userinfo where userId = #{userId}
+    </delete>
 </mapper>

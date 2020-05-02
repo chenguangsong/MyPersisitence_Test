@@ -12,4 +12,5 @@ public interface Executer {
 
     <E> List<E> query(Configuration configuration, SqlStatement sqlStatement,Object... param) throws SQLException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchFieldException, IntrospectionException, InvocationTargetException;
 
+    boolean excute(Configuration configuration, SqlStatement sqlStatement,Object... param) throws SQLException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchFieldException;
 }

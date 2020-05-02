@@ -7,6 +7,7 @@ import com.study.sqlsession.SqlSession;
 import com.study.sqlsession.SqlSessionFactoryBuilder;
 import com.study.sqlsession.SqlsessionFactory;
 import org.dom4j.DocumentException;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.beans.IntrospectionException;
@@ -26,44 +27,60 @@ import java.util.List;
  **/
 public class MainTest {
 
+    InputStream inputStream;
+    SqlsessionFactory sqlsessionFactory;
+    SqlSession sqlSessionsion;
+
+    @Before
+    public void before() throws DocumentException, PropertyVetoException, FileNotFoundException {
+        inputStream = Resource.getResourceAsInputStream("SqlMapperConfig");
+        sqlsessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        sqlSessionsion = sqlsessionFactory.openSession();
+    }
 
     @Test
-    public void Test() throws PropertyVetoException, DocumentException, IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException, FileNotFoundException {
-        InputStream inputStream = Resource.getResourceAsInputStream("SqlMapperConfig");
-        SqlsessionFactory sqlsessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
-        SqlSession sqlSessionsion = sqlsessionFactory.openSession();
-//
-//        UserInfo user = new UserInfo();
-//        user.setUserId(1);
-//        user.setUserName("李四");
-//
-//        Object o = sqlSession.selectOne("com.study.pojo.UserInfo.selectOne", user);
-//
-//        System.out.println(o.toString());
-//
-//        System.out.println("==================");
-//        List<Object> objects = sqlSession.selectList("com.study.pojo.UserInfo.selectList", user);
-//        for (Object object : objects) {
-//            System.out.println(object.toString());
-//        }
-
-//        IUserInfoDao dao = new UserInfoDao();
-//        dao.findAll();
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setUserName("李四");
-//        dao.findByCondition(userInfo);
-
-        IUserInfoDao userInfoDao = sqlSessionsion.getMapper(IUserInfoDao.class);
+    public void addTest(){
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserName("李四");
-        UserInfo userInfo1 = userInfoDao.findByCondition(userInfo);
-        System.out.println(userInfo1.toString());
-        System.out.println("======================");
-        List<UserInfo> all = userInfoDao.findAll();
-        for (UserInfo info : all) {
-            System.out.println(info.toString());
+        userInfo.setUserId(3);
+        userInfo.setUserName("王五");
+        IUserInfoDao mapper = sqlSessionsion.getMapper(IUserInfoDao.class);
+        mapper.saveUserInfo(userInfo);
+    }
+
+    @Test
+    public void updateTest(){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName("aaaa");
+        userInfo.setUserId(3);
+        IUserInfoDao mapper = sqlSessionsion.getMapper(IUserInfoDao.class);
+        mapper.updateUserInfoById(userInfo);
+    }
+
+    @Test
+    public void deleteTest(){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(3);
+        IUserInfoDao mapper = sqlSessionsion.getMapper(IUserInfoDao.class);
+        mapper.deleteUserInfoById(userInfo);
+    }
+
+    @Test
+    public void findAll() throws FileNotFoundException, InstantiationException, IntrospectionException, SQLException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, PropertyVetoException, ClassNotFoundException, DocumentException {
+        IUserInfoDao mapper = sqlSessionsion.getMapper(IUserInfoDao.class);
+        List<UserInfo> userInfos = mapper.findAll();
+        for (UserInfo userInfo : userInfos) {
+            System.out.println(userInfo.toString());
         }
+    }
+
+    @Test
+    public void findByCondition() throws IllegalAccessException, FileNotFoundException, InstantiationException, IntrospectionException, SQLException, PropertyVetoException, InvocationTargetException, NoSuchFieldException, ClassNotFoundException, DocumentException {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(1);
+        IUserInfoDao mapper = sqlSessionsion.getMapper(IUserInfoDao.class);
+        UserInfo userInfo1 = mapper.findByCondition(userInfo);
+        System.out.println(userInfo1.toString());
 
     }
+
 }

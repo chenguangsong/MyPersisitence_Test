@@ -44,6 +44,12 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     @Override
+    public boolean execute(String statementId, Object... param) throws ClassNotFoundException, SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+        DefaultExecuter defaultExecuter = new DefaultExecuter();
+        return defaultExecuter.excute(configuration,configuration.getMap().get(statementId),param);
+    }
+
+    @Override
     public <T> T getMapper(Class<?> mapperClass) {
         Object o = Proxy.newProxyInstance(DefaultSqlSession.class.getClassLoader(), new Class[]{mapperClass}, new InvocationHandler() {
             /**
@@ -61,10 +67,13 @@ public class DefaultSqlSession implements SqlSession {
                 String statementId = namespace + "." + methodName;
                 //获取被调用方法返回值类型
                 Type genericReturnType = method.getGenericReturnType();
+                Class<?> returnType = method.getReturnType();
                 //判断被调用方法返回类型是否进行类范型参数化
                 if(genericReturnType instanceof ParameterizedType){
                     List<Object> objects = selectList(statementId, args);
                     return objects;
+                }else if(genericReturnType.getTypeName().equals("void")){
+                    return execute(statementId,args);
                 }
                 return selectOne(statementId,args);
             }

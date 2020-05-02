@@ -21,8 +21,12 @@ public interface IUserInfoDao {
 
     //查询所有
     List<UserInfo> findAll() throws FileNotFoundException, IllegalAccessException, IntrospectionException, InstantiationException, NoSuchFieldException, SQLException, InvocationTargetException, ClassNotFoundException, PropertyVetoException, DocumentException;
-
     //根据条件查询
     UserInfo findByCondition(UserInfo userInfo) throws FileNotFoundException, PropertyVetoException, DocumentException, IllegalAccessException, ClassNotFoundException, IntrospectionException, InstantiationException, SQLException, InvocationTargetException, NoSuchFieldException;
-
+    //新增用户信息
+    void saveUserInfo(UserInfo userInfo);
+    //根据用户id更新用户信息
+    void updateUserInfoById(UserInfo userInfo);
+    //根据用户id删除用户
+    void deleteUserInfoById(UserInfo userInfo);
 }

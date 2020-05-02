@@ -79,6 +79,36 @@ public class DefaultExecuter implements Executer {
         return (List<E>) objects;
     }
 
+    @Override
+    public boolean excute(Configuration configuration, SqlStatement sqlStatement, Object... param) throws SQLException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchFieldException {
+        //注册驱动，获取连接
+        DataSource dataSource = configuration.getDataSource();
+        Connection connection = dataSource.getConnection();
+        //获取sql语句
+        String sql = sqlStatement.getSql();
+        //转换sql语句 将占位符转换为'?'，且将sql参数解析存储
+        BoundSql boundSql = getBoundSql(sql);
+        //获取预处理对象
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+        //绑定参数
+        String paramType = sqlStatement.getParamType();
+        Class<?> paramClassType = getClassType(paramType);
+        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+        for(int i = 0; i < parameterMappingList.size(); i++){
+            ParameterMapping parameterMapping = parameterMappingList.get(i);
+            String content = parameterMapping.getContent();
+            //反射
+            Field declaredField = paramClassType.getDeclaredField(content);
+            //暴力访问
+            declaredField.setAccessible(true);
+            Object o = declaredField.get(param[0]);
+            preparedStatement.setObject(i+1,o);
+        }
+        //执行sql
+        return preparedStatement.execute();
+
+    }
+
     /**
     * @author chenguang
     * @Description //转换sql，将'#{}'转换为'?',解析出#{}中的参数进行存储
