@@ -85,14 +85,11 @@ public class XMLConfigBuilder {
         String paramType = element.attributeValue("paramType");
         String resultType = element.attributeValue("resultType");
         String sql = element.getTextTrim();
-
         sqlStatement.setId(id);
         sqlStatement.setParamType(paramType);
         sqlStatement.setResultType(resultType);
         sqlStatement.setSql(sql);
-
         String namespace = element.getParent().attributeValue("namespace");
-
         String key = namespace + "." + id;
         configuration.getMap().put(key,sqlStatement);
     }

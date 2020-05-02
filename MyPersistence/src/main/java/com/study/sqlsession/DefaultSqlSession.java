@@ -67,7 +67,6 @@ public class DefaultSqlSession implements SqlSession {
                 String statementId = namespace + "." + methodName;
                 //获取被调用方法返回值类型
                 Type genericReturnType = method.getGenericReturnType();
-                Class<?> returnType = method.getReturnType();
                 //判断被调用方法返回类型是否进行类范型参数化
                 if(genericReturnType instanceof ParameterizedType){
                     List<Object> objects = selectList(statementId, args);
