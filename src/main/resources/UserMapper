@@ -2,22 +2,23 @@
 
     <!--配置sql信息-->
 
+    <!--查询所以用户信息-->
     <select id="findAll" resultType="com.study.pojo.UserInfo">
         select * from userinfo
     </select>
-
+    <!--根据条件查询用户信息-->
     <select id="findByCondition" resultType="com.study.pojo.UserInfo" paramType="com.study.pojo.UserInfo">
         select * from userinfo where userId = #{userId}
     </select>
-
+    <!--新增用户信息-->
     <insert id="saveUserInfo" paramType="com.study.pojo.UserInfo">
         insert into userinfo values( #{userId} , #{userName} )
     </insert>
-
+    <!--根据userId修改用户信息-->
     <update id="updateUserInfoById" paramType="com.study.pojo.UserInfo">
         update userinfo set username = #{userName} where userId = #{userId}
     </update>
-
+    <!--根据userId删除用户信息-->
     <delete id="deleteUserInfoById" paramType="com.study.pojo.UserInfo">
         delete from userinfo where userId = #{userId}
     </delete>

@@ -33,6 +33,7 @@ public class MainTest {
 
     @Before
     public void before() throws DocumentException, PropertyVetoException, FileNotFoundException {
+        //读取配置文件
         inputStream = Resource.getResourceAsInputStream("SqlMapperConfig");
         sqlsessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         sqlSessionsion = sqlsessionFactory.openSession();

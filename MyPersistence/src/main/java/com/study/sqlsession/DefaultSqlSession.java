@@ -61,7 +61,7 @@ public class DefaultSqlSession implements SqlSession {
             **/
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                //
+                // namespace + id = classname + "." + methodName;
                 String methodName = method.getName();
                 String namespace = method.getDeclaringClass().getName();
                 String statementId = namespace + "." + methodName;

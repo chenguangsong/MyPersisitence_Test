@@ -39,7 +39,7 @@ public class XMLConfigBuilder {
     **/
     public Configuration pathConfig(InputStream in) throws DocumentException, PropertyVetoException, FileNotFoundException {
         Document document = new SAXReader().read(in);
-        //获取根结点
+        //获取根结点 configuration
         Element rootElement = document.getRootElement();
         //循环获取数据库连接信息
         List<Element> propertyList = rootElement.selectNodes("//property");
